@@ -4,8 +4,8 @@
     <!-- Connection details -->
     <dbtype>mysql</dbtype>
     <driver>com.mysql.jdbc.Driver</driver>
-    <DBUrl>jdbc:mysql://server:3306/tatp</DBUrl>
-    <username>user</username>
+    <DBUrl>jdbc:mysql://localhost:3307/tatp?useSSL=false&amp;socketFactory=org.newsclub.net.mysql.AFUNIXDatabaseSocketFactory&amp;junixsocket.file=/var/run/mysqld/mysqld.sock</DBUrl>
+    <username>root</username>
     <password>password</password>
     <isolation>TRANSACTION_SERIALIZABLE</isolation>
     <uploadCode></uploadCode>
@@ -18,8 +18,8 @@
     <terminals>10</terminals>
     <works>
         <work>
-            <time>300</time>
-            <rate>10000</rate>
+            <time>180</time>
+            <rate>100000</rate>
             <weights>2, 35, 10, 35, 2, 14, 2</weights>
         </work>
     </works>

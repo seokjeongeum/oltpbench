@@ -4,22 +4,22 @@
     <!-- Connection details -->
     <dbtype>mysql</dbtype>
     <driver>com.mysql.jdbc.Driver</driver>
-    <DBUrl>jdbc:mysql://localhost:3306/tpcc</DBUrl>
+    <DBUrl>jdbc:mysql://localhost:3307/tpcc?useSSL=false&amp;socketFactory=org.newsclub.net.mysql.AFUNIXDatabaseSocketFactory&amp;junixsocket.file=/var/run/mysqld/mysqld.sock</DBUrl>
     <username>root</username>
-    <password></password>
+    <password>password</password>
     <isolation>TRANSACTION_SERIALIZABLE</isolation>
     <uploadCode></uploadCode>
     <uploadUrl></uploadUrl>
     
     <!-- Scale factor is the number of warehouses in TPCC -->
-    <scalefactor>2</scalefactor>
+    <scalefactor>175</scalefactor>
     
     <!-- The workload -->
     <terminals>2</terminals>
     <works>
         <work>
-          <time>60</time>
-          <rate>10000</rate>
+          <time>180</time>
+          <rate>100000</rate>
           <weights>45,43,4,4,4</weights>
         </work>
     </works>

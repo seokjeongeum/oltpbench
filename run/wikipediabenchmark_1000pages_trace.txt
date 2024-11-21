@@ -1,6 +1,6 @@
 0 AmeriKKKa's_Most_Wanted -
 0 Antonio_Gaudi/Casa_Milo -
-0 Casa_Milà -
+0 Casa_Milï¿½ -
 0 August_22 -
 0 Animation -
 0 Animation -
@@ -133,7 +133,7 @@
 0 Attila_the_Hun -
 1 Alan_Turing -
 0 Alan_Turing -
-0 André-Marie_Ampère -
+0 Andrï¿½-Marie_Ampï¿½re -
 0 Alan_Garner -
 0 Alan_Garner -
 0 Abduction -
@@ -434,7 +434,7 @@
 0 Agatha_Christie -
 0 Abortion -
 0 Academy_Award -
-0 Alfonso_Cuarón -
+0 Alfonso_Cuarï¿½n -
 0 Actors/Male -
 0 ABBA -
 0 Agrarianism -
@@ -826,7 +826,7 @@
 0 Abjad -
 0 Academy_Award -
 0 Amateur_Radio -
-0 Æesop -
+0 ï¿½esop -
 0 Anthropology -
 0 Anthropology -
 0 Anthropology -
