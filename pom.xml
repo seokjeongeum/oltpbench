@@ -12,6 +12,8 @@
     <properties>
         <maven.compiler.source>1.10</maven.compiler.source>
         <maven.compiler.target>1.10</maven.compiler.target>
+        <!-- Define a property for the Log4j2 version for easy updates -->
+        <log4j2.version>2.23.1</log4j2.version>
     </properties>
     
     <!-- *************************************** BUILDING *************************************** -->
@@ -88,11 +90,30 @@
             <artifactId>persistence-api</artifactId>
             <version>1.0</version>
         </dependency>
-<dependency>
-  <groupId>log4j</groupId>
-  <artifactId>log4j</artifactId>
-  <version>[2.0,)</version>
-</dependency>
+
+        <!-- ==================================================================== -->
+        <!-- LOG4J 2 MIGRATION TO FIX CVE-2023-26464                              -->
+        <!-- Removed old/incorrect log4j:log4j dependency.                      -->
+        <!-- Added correct Log4j2 dependencies and the 1.x bridge.              -->
+        <!-- ==================================================================== -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <!-- This bridge intercepts old Log4j 1.x calls and routes them to Log4j 2 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <!-- ==================================================================== -->
+
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -107,6 +128,14 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.6</version>
+            <!-- This library depends on the vulnerable Log4j 1.x. We exclude it here. -->
+            <!-- The log4j-1.2-api bridge will handle its logging calls.            -->
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.sf.opencsv</groupId>
@@ -240,6 +269,5 @@
         </dependency>
 
     </dependencies>
-    
     
 </project>
