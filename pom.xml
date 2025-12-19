@@ -13,7 +13,7 @@
         <maven.compiler.source>1.10</maven.compiler.source>
         <maven.compiler.target>1.10</maven.compiler.target>
         <!-- Define a property for the Log4j2 version for easy updates -->
-        <log4j2.version>2.23.1</log4j2.version>
+        <log4j2.version>2.25.3</log4j2.version>
     </properties>
     
     <!-- *************************************** BUILDING *************************************** -->
