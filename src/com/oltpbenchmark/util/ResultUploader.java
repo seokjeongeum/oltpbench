@@ -23,8 +23,9 @@ import com.oltpbenchmark.types.DatabaseType;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.io.FileHandler;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -118,7 +119,13 @@ public class ResultUploader {
         for (String key: IGNORE_CONF) {
             outputConf.clearProperty(key);
         }
-        outputConf.save(os);
+        // In Commons Configuration 2.x, use FileHandler to write to a Writer
+        FileHandler handler = new FileHandler(outputConf);
+        try {
+            handler.save(new java.io.OutputStreamWriter(os));
+        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
+            throw new ConfigurationException(e);
+        }
     }
 
     public void writeSummary(PrintStream os) {
