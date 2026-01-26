@@ -123,8 +123,6 @@ public class ResultUploader {
             java.io.PrintWriter writer = new java.io.PrintWriter(os, true);
             outputConf.write(writer);
             writer.flush();
-        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
-            throw new ConfigurationException("Failed to write configuration", e);
         } catch (java.io.IOException e) {
             throw new ConfigurationException("Failed to write configuration", e);
         }

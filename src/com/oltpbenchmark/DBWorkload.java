@@ -194,6 +194,9 @@ public class DBWorkload {
         String configFile = argsLine.getOptionValue("c");
         Configurations configs = new Configurations();
         XMLConfiguration xmlConfig = configs.xml(configFile);
+        if (xmlConfig == null) {
+            throw new IllegalStateException("Failed to load XML configuration from file: " + configFile);
+        }
         xmlConfig.setExpressionEngine(new XPathExpressionEngine());
 
         // Load the configuration for each benchmark
