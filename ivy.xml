@@ -32,7 +32,7 @@
 		<dependency org="org.apache.httpcomponents" name="httpmime" rev="4.3" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="log4j" name="log4j" rev="1.2.17" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="commons-collections" name="commons-collections" rev="3.2.1" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
-		<dependency org="net.sourceforge.collections" name="collections-generic" rev="4.01" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="org.apache.commons" name="commons-collections4" rev="4.4" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="commons-configuration" name="commons-configuration" rev="1.6" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="net.sf.opencsv" name="opencsv" rev="2.3" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="ch.ethz.ganymed" name="ganymed-ssh2" rev="261" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>

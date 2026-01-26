@@ -28,7 +28,7 @@ import java.util.Random;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.collections15.set.ListOrderedSet;
+import org.apache.commons.collections4.set.ListOrderedSet;
 
 /**
  * @author pavlo

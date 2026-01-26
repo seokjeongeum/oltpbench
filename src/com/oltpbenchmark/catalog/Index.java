@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 
 import com.oltpbenchmark.types.SortDirectionType;
 import com.oltpbenchmark.util.StringUtil;

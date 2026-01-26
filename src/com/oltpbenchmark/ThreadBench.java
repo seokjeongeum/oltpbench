@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.log4j.Logger;
 
 import com.oltpbenchmark.LatencyRecord.Sample;

@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 
 import com.oltpbenchmark.benchmarks.auctionmark.util.ItemId;
 import com.oltpbenchmark.benchmarks.auctionmark.util.ItemInfo;

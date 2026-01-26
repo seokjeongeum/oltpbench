@@ -39,8 +39,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
-import org.apache.commons.collections15.set.ListOrderedSet;
+import org.apache.commons.collections4.map.ListOrderedMap;
+import org.apache.commons.collections4.set.ListOrderedSet;
 import org.apache.log4j.Logger;
 
 import com.oltpbenchmark.api.Loader;
