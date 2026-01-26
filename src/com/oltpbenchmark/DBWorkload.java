@@ -823,8 +823,8 @@ public class DBWorkload {
 
         for (HierarchicalConfiguration<ImmutableNode> weight : weights) {
 
-            // In Configuration 2.x, we check for attributes using getString with attribute syntax
-            String benchAttr = weight.getString("[@bench]");
+            // In Configuration 2.x, attributes are accessed using [@attribute] syntax
+            String benchAttr = weight.getString("[@bench]", null);
             
             // stop if second attributed node encountered
             if (weights_started && benchAttr != null) {
@@ -835,7 +835,11 @@ public class DBWorkload {
                 weights_started = true;
             }
             if (weights_started) {
-                weight_strings.add(weight.getString(""));
+                // Get the text content of the node; empty key returns the root node's value
+                String value = weight.getString("", null);
+                if (value != null) {
+                    weight_strings.add(value);
+                }
             }
 
         }
