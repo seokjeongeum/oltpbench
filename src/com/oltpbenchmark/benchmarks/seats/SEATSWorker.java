@@ -44,7 +44,7 @@ import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.util.*;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.log4j.Logger;
 
 import com.oltpbenchmark.api.Procedure;

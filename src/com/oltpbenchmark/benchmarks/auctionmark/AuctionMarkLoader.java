@@ -37,8 +37,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections15.CollectionUtils;
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.log4j.Logger;
 
 import com.oltpbenchmark.api.Loader;

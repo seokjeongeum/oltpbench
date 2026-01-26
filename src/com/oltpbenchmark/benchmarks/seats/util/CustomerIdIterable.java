@@ -20,7 +20,7 @@ package com.oltpbenchmark.benchmarks.seats.util;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections15.set.ListOrderedSet;
+import org.apache.commons.collections4.set.ListOrderedSet;
 
 import com.oltpbenchmark.util.Histogram;
 
