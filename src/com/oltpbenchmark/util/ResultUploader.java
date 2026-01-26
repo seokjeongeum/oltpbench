@@ -23,8 +23,8 @@ import com.oltpbenchmark.types.DatabaseType;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -114,11 +114,20 @@ public class ResultUploader {
     }
 
     public void writeBenchmarkConf(PrintStream os) throws ConfigurationException {
-        XMLConfiguration outputConf = (XMLConfiguration) expConf.clone();
-        for (String key: IGNORE_CONF) {
-            outputConf.clearProperty(key);
+        try {
+            XMLConfiguration outputConf = (XMLConfiguration) expConf.clone();
+            for (String key: IGNORE_CONF) {
+                outputConf.clearProperty(key);
+            }
+            // Wrap PrintStream in a PrintWriter for Commons Configuration 2.x
+            java.io.PrintWriter writer = new java.io.PrintWriter(os, true);
+            outputConf.write(writer);
+            writer.flush();
+        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
+            throw new ConfigurationException("Failed to write configuration", e);
+        } catch (java.io.IOException e) {
+            throw new ConfigurationException("Failed to write configuration", e);
         }
-        outputConf.save(os);
     }
 
     public void writeSummary(PrintStream os) {

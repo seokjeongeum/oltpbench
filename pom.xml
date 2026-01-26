@@ -124,19 +124,29 @@
             <artifactId>collections-generic</artifactId>
             <version>4.01</version>
         </dependency>
+        <!-- ==================================================================== -->
+        <!-- COMMONS CONFIGURATION 2.x MIGRATION TO FIX CVE-2025-46392           -->
+        <!-- Upgraded from commons-configuration 1.6 to commons-configuration2   -->
+        <!-- to fix Uncontrolled Resource Consumption vulnerability.             -->
+        <!-- ==================================================================== -->
         <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>1.6</version>
-            <!-- This library depends on the vulnerable Log4j 1.x. We exclude it here. -->
-            <!-- The log4j-1.2-api bridge will handle its logging calls.            -->
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>2.11.0</version>
         </dependency>
+        <!-- Commons Configuration 2 requires commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.17.0</version>
+        </dependency>
+        <!-- Commons Configuration 2 requires commons-text -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+        <!-- ==================================================================== -->
         <dependency>
             <groupId>net.sf.opencsv</groupId>
             <artifactId>opencsv</artifactId>
