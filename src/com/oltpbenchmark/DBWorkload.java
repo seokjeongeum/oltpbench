@@ -34,10 +34,12 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.SubnodeConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.apache.log4j.Logger;
 
 import com.oltpbenchmark.api.BenchmarkModule;
@@ -84,18 +86,19 @@ public class DBWorkload {
         CommandLineParser parser = new PosixParser();
         XMLConfiguration pluginConfig=null;
         try {
-            pluginConfig = new XMLConfiguration("/oltpbench/config/plugin.xml");
+            Configurations configs = new Configurations();
+            pluginConfig = configs.xml("/oltpbench/config/plugin.xml");
+            pluginConfig.setExpressionEngine(new XPathExpressionEngine());
         } catch (ConfigurationException e1) {
             LOG.info("Plugin configuration file config/plugin.xml is missing");
             e1.printStackTrace();
         }
-        pluginConfig.setExpressionEngine(new XPathExpressionEngine());
         Options options = new Options();
         options.addOption(
                 "b",
                 "bench",
                 true,
-                "[required] Benchmark class. Currently supported: "+ pluginConfig.getList("/plugin//@name"));
+                "[required] Benchmark class. Currently supported: "+ (pluginConfig != null ? pluginConfig.getList("/plugin//@name") : ""));
         options.addOption(
                 "c", 
                 "config", 
@@ -189,7 +192,8 @@ public class DBWorkload {
         List<TransactionType> activeTXTypes = new ArrayList<TransactionType>();
         
         String configFile = argsLine.getOptionValue("c");
-        XMLConfiguration xmlConfig = new XMLConfiguration(configFile);
+        Configurations configs = new Configurations();
+        XMLConfiguration xmlConfig = configs.xml(configFile);
         xmlConfig.setExpressionEngine(new XPathExpressionEngine());
 
         // Load the configuration for each benchmark
@@ -333,7 +337,11 @@ public class DBWorkload {
 
                 // Get the weights for this grouping and make sure that there
                 // is an appropriate number of them.
-                List<String> groupingWeights = xmlConfig.getList(key + "/weights");
+                List<Object> groupingWeightsObj = xmlConfig.getList(key + "/weights");
+                List<String> groupingWeights = new ArrayList<String>();
+                for (Object obj : groupingWeightsObj) {
+                    groupingWeights.add(obj.toString());
+                }
                 if (groupingWeights.size() != numTxnTypes) {
                     LOG.fatal(String.format("Grouping \"%s\" has %d weights,"
                                 + " but there are %d transactions in this"
@@ -360,7 +368,7 @@ public class DBWorkload {
             
             int size = xmlConfig.configurationsAt("/works/work").size();
             for (int i = 1; i < size + 1; i++) {
-                SubnodeConfiguration work = xmlConfig.configurationAt("works/work[" + i + "]");
+                HierarchicalConfiguration<ImmutableNode> work = xmlConfig.configurationAt("works/work[" + i + "]");
                 List<String> weight_strings;
                 
                 // use a workaround if there multiple workloads or single
@@ -375,8 +383,13 @@ public class DBWorkload {
                     String weightKey = work.getString("weights[not(@bench)]").toLowerCase();
                     if (groupings.containsKey(weightKey))
                         weight_strings = groupings.get(weightKey);
-                    else
-                    weight_strings = work.getList("weights[not(@bench)]"); 
+                    else {
+                        List<Object> weightsObj = work.getList("weights[not(@bench)]");
+                        weight_strings = new ArrayList<String>();
+                        for (Object obj : weightsObj) {
+                            weight_strings.add(obj.toString());
+                        }
+                    }
                 }
                 int rate = 1;
                 boolean rateLimited = true;
@@ -801,26 +814,32 @@ public class DBWorkload {
     /* buggy piece of shit of Java XPath implementation made me do it 
        replaces good old [@bench="{plugin_name}", which doesn't work in Java XPath with lists
      */
-    private static List<String> getWeights(String plugin, SubnodeConfiguration work) {
+    private static List<String> getWeights(String plugin, HierarchicalConfiguration<ImmutableNode> work) {
 
         List<String> weight_strings = new LinkedList<String>();
         @SuppressWarnings("unchecked")
-        List<SubnodeConfiguration> weights = work.configurationsAt("weights");
+        List<HierarchicalConfiguration<ImmutableNode>> weights = work.configurationsAt("weights");
         boolean weights_started = false;
 
-        for (SubnodeConfiguration weight : weights) {
+        for (HierarchicalConfiguration<ImmutableNode> weight : weights) {
 
+            // In Configuration 2.x, attributes are accessed using [@attribute] syntax
+            String benchAttr = weight.getString("[@bench]", null);
+            
             // stop if second attributed node encountered
-            if (weights_started && weight.getRootNode().getAttributeCount() > 0) {
+            if (weights_started && benchAttr != null) {
                 break;
             }
-            // start adding node values, if node with attribute equal to current
-            // plugin encountered
-            if (weight.getRootNode().getAttributeCount() > 0 && weight.getRootNode().getAttribute(0).getValue().equals(plugin)) {
+            // start adding node values, if node with attribute equal to current plugin encountered
+            if (benchAttr != null && benchAttr.equals(plugin)) {
                 weights_started = true;
             }
             if (weights_started) {
-                weight_strings.add(weight.getString(""));
+                // Get the text content of the node; empty key returns the root node's value
+                String value = weight.getString("", null);
+                if (value != null) {
+                    weight_strings.add(value);
+                }
             }
 
         }

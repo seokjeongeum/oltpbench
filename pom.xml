@@ -125,17 +125,9 @@
             <version>4.4</version>
         </dependency>
         <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>1.6</version>
-            <!-- This library depends on the vulnerable Log4j 1.x. We exclude it here. -->
-            <!-- The log4j-1.2-api bridge will handle its logging calls.            -->
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>2.13.0</version>
         </dependency>
         <dependency>
             <groupId>net.sf.opencsv</groupId>
