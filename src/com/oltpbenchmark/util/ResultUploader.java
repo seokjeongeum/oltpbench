@@ -121,7 +121,13 @@ public class ResultUploader {
         }
         // In Commons Configuration 2.x, use FileHandler to write to a Writer
         FileHandler handler = new FileHandler(outputConf);
-        handler.save(new java.io.OutputStreamWriter(os));
+        java.io.Writer writer = new java.io.OutputStreamWriter(os);
+        handler.save(writer);
+        try {
+            writer.flush();
+        } catch (java.io.IOException e) {
+            throw new ConfigurationException(e);
+        }
     }
 
     public void writeSummary(PrintStream os) {

@@ -88,17 +88,17 @@ public class DBWorkload {
         try {
             Configurations configs = new Configurations();
             pluginConfig = configs.xml("/oltpbench/config/plugin.xml");
+            pluginConfig.setExpressionEngine(new XPathExpressionEngine());
         } catch (ConfigurationException e1) {
             LOG.info("Plugin configuration file config/plugin.xml is missing");
             e1.printStackTrace();
         }
-        pluginConfig.setExpressionEngine(new XPathExpressionEngine());
         Options options = new Options();
         options.addOption(
                 "b",
                 "bench",
                 true,
-                "[required] Benchmark class. Currently supported: "+ pluginConfig.getList("/plugin//@name"));
+                "[required] Benchmark class. Currently supported: "+ (pluginConfig != null ? pluginConfig.getList("/plugin//@name") : ""));
         options.addOption(
                 "c", 
                 "config", 
